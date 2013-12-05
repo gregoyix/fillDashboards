@@ -1,0 +1,11 @@
+
+Simulación de envío de medidas para el Dashboard de Repsol
+===========================================================
+
+La primera idea es que envie N veces al dia una serie de medidas a un conjunto de assets
+
+Lo vamos a hacer en principio para el protocolo de Sensile que es más fácil.
+
+N => en principio 3
+
+Intentar no utilizar muchas librerias raras (mirar virtualenv por si se puede usar).

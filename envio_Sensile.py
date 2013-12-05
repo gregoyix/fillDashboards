@@ -6,16 +6,21 @@ import simplejson as json
 import time
 import datetime
 import math
-import MetSensile as mm
+import metSensile as mm
+import ConfigParser
 
-urlINTEGRACION = 'http://dev-idas-gw-01:8002/repsol/v1'
-urlPREPRO = 'http://localhost:8002/repsol/v1' # con el tunel claro
 
-urlIntDCA_MC = 'http://cloncloud-m2mglobserv01.hi.inet:8002/repsol/v1' 
 
-urlPRODUCCION = 'http://81.45.14.155:8002/repsol/v1'
+'''
+Leo opciones de configuracion
+'''
+config = ConfigParser.RawConfigParser()
+config.read('confEnvioRepsol.cfg')
 
-url = urlPREPRO
+# Leo la url de envio
+url = config.get('Entorno', 'url')
+print "url -> ", url
+
 
 dic = json.loads('{ "id": "1","from": "","to": "tel:22012;phone-context=+34","timestamp": 1, "message": "" }')
 print dic
@@ -88,7 +93,7 @@ def envioNativo(sensores, dic):
         print data
         h.post(url, data)
 
-envioSensile(senSensile,"", 6)
+#envioSensile(senSensile,"", 6)
 
 
     
