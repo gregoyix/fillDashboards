@@ -17,10 +17,39 @@ Leo opciones de configuracion
 config = ConfigParser.RawConfigParser()
 config.read('confEnvioRepsol.cfg')
 
-# Leo la url de envio
+print "##################################"
+# Obtengo el entorno y la url de envio
+print "Entorno > ", config.get('Entorno', 'entorno')
 url = config.get('Entorno', 'url')
 print "url -> ", url
-
+print "##################################"
+# Obtengo la fecha y el numero de medidas que se envia al dia
+dia = config.getint('Fecha', 'dia')
+print "dia -> ", dia
+mes = config.getint('Fecha', 'mes')
+print "mes -> ", mes
+anyo = config.getint('Fecha', 'anyo')
+print "anyo -> ", anyo
+medidasAlDia = config.getint('Fecha', 'medidasAlDia')
+print "medidasAlDia -> ", medidasAlDia
+print "##################################"
+# Obtengo los valores iniciales de las variables
+try:
+       temp = config.getint('Variables', 'tempo')
+except ConfigParser.NoOptionError:
+       temp = 0
+print "temperatura inicial -> ", temp
+try:
+       niv = config.getint('Variables', 'niv')
+except ConfigParser.NoOptionError:
+       niv = 0
+print "nivel de llenado -> ", niv
+try:
+       bat = config.getint('Variables', 'bat')
+except ConfigParser.NoOptionError:
+       bat = 0
+print "bateria -> ", bat
+print "##################################"
 
 dic = json.loads('{ "id": "1","from": "","to": "tel:22012;phone-context=+34","timestamp": 1, "message": "" }')
 print dic
@@ -29,18 +58,10 @@ print dic
 timestamp = int(time.time()) *1000
 print "hora ", timestamp
 
-mes_Nivel_tanque_bajo ="ABCDRM500280712004230C00372A14E1FFFF10FFFFFFFF090105000000010200130110"
-
-mes_Quita_alarma = "ABCDRM50034032100323150011F504B0FFFF33FFFFFFFF09020E000000010200340133"
-
 dic = json.loads('{ "id": "1","from": "","to": "tel:22012;phone-context=+34","timestamp": 1, "message": "" }')
 print dic
 
-message = mes_Quita_alarma
 
-dic ['timestamp'] = timestamp
-dic ['message'] = message
-    
 """
 
 Sensores Sensile
@@ -56,15 +77,9 @@ Sensores Sensile
 
 senSensile = [ "+34660373185", "+34648420863", "+34659261908", "+34629104701", "+34696207956", "+34636479394"]
 
-mensaje1 = "i33t0D0913t0000q1Ak1Ab77eC00f0g0h0000c23" # nivel normal de llenado del tanque
-mensaje2 = "i33t0D0914t0000q16k17b75e170f0g0h0000c23" # nivel critico de llenado del tanque                         
-mensaje3 = "i33t0D0914t0000q16k08b75e170f0g0h0000c23" # nivel temperatura bajo
-mensaje4 = "i33t0D0917t0000qAk17b78e800f0g0h0000c23" # bateria por debajo de 9 v
-            
 
-#dic ['message'] = mensaje4
 
-print dic ['message']
+
 
 def envioSensile(sensores, men, niv):
     '''
